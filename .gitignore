@@ -5,3 +5,4 @@ pan.log
 terraform.tfstate
 terraform.tfstate.backup
 .terraform
+.gitignore

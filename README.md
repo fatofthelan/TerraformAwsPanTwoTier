@@ -5,6 +5,7 @@ Terraform Templates to Deploy Infrastructure onto AWS
 -------------
  - Please see section 2 below pertaining to Credentials and Authentication.
  - Please change the S3 bucket name to a globally unique name.
+ - Please change the default username/password of admin/paloalto immediately!
 
 1. Code Organization:
 -----------------
