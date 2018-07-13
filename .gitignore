@@ -1,8 +1,0 @@
-aws_creds.tf
-keys/two_tier_vpc_key
-keys/two_tier_vpc_key.pub
-pan.log
-terraform.tfstate
-terraform.tfstate.backup
-.terraform
-.gitignore
