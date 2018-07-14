@@ -17,7 +17,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "NewPublicSubnet" {
+resource "aws_subnet" "public_subnet" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block        = "${var.PublicCIDR_Block}"
   availability_zone = "${data.aws_availability_zones.available.names[0]}"
@@ -25,22 +25,31 @@ resource "aws_subnet" "NewPublicSubnet" {
   #map_public_ip_on_launch = true
   tags {
     "Application" = "${var.StackName}"
-    "Name"        = "${join("", list(var.StackName, "NewPublicSubnet"))}"
+    "Name"        = "${join("", list(var.StackName, "_public_subnet"))}"
   }
 }
 
-resource "aws_subnet" "NewWebSubnet" {
+resource "aws_subnet" "web_subnet" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block        = "${var.WebCIDR_Block}"
   availability_zone = "${data.aws_availability_zones.available.names[0]}"
 
-  #map_public_ip_on_launch = true
   tags {
     "Application" = "${var.StackName}"
-    "Name"        = "${join("", list(var.StackName, "NewWebSubnet"))}"
+    "Name"        = "${join("", list(var.StackName, "_web_subnet"))}"
   }
 }
 
+resource "aws_subnet" "db_subnet" {
+  vpc_id            = "${aws_vpc.main.id}"
+  cidr_block        = "${var.DbCIDR_Block}"
+  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+
+  tags {
+    "Application" = "${var.StackName}"
+    "Name"        = "${join("", list(var.StackName, "_db_subnet"))}"
+  }
+}
 resource "aws_vpc_dhcp_options" "dopt21c7d043" {
   domain_name         = "us-west-2.compute.internal"
   domain_name_servers = ["AmazonProvidedDNS"]
@@ -50,62 +59,102 @@ resource "aws_network_acl" "aclb765d6d2" {
   vpc_id = "${aws_vpc.main.id}"
 
   subnet_ids = [
-    "${aws_subnet.NewPublicSubnet.id}",
-    "${aws_subnet.NewWebSubnet.id}",
+    "${aws_subnet.public_subnet.id}",
+    "${aws_subnet.web_subnet.id}",
   ]
 }
 
-resource "aws_route_table" "rtb059a2460" {
+resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.main.id}"
+
+  tags {
+    "Name"        = "${join("", list(var.StackName, "_public"))}"
+  }
 }
 
-resource "aws_route_table" "rtb049a2461" {
+resource "aws_route_table" "web_route_table" {
   vpc_id = "${aws_vpc.main.id}"
+
+  tags {
+    "Name"        = "${join("", list(var.StackName, "_web"))}"
+  }
 }
 
-resource "aws_route_table_association" "subnetroute2" {
-  subnet_id      = "${aws_subnet.NewPublicSubnet.id}"
-  route_table_id = "${aws_route_table.rtb049a2461.id}"
+resource "aws_route_table" "db_route_table" {
+  vpc_id = "${aws_vpc.main.id}"
+
+  tags {
+    "Name"        = "${join("", list(var.StackName, "_db"))}"
+  }
 }
 
-resource "aws_route" "route1" {
-  route_table_id         = "${aws_route_table.rtb059a2460.id}"
+resource "aws_route_table_association" "public_rt_association" {
+  subnet_id      = "${aws_subnet.public_subnet.id}"
+  route_table_id = "${aws_route_table.public_route_table.id}"
+}
+
+resource "aws_route_table_association" "web_rt_association" {
+  subnet_id      = "${aws_subnet.web_subnet.id}"
+  route_table_id = "${aws_route_table.web_route_table.id}"
+}
+
+resource "aws_route_table_association" "db_rt_association" {
+  subnet_id      = "${aws_subnet.db_subnet.id}"
+  route_table_id = "${aws_route_table.db_route_table.id}"
+}
+
+resource "aws_route" "igw_route" {
+  route_table_id         = "${aws_route_table.public_route_table.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.InternetGateway.id}"
 }
 
-resource "aws_route" "route2" {
-  route_table_id         = "${aws_route_table.rtb049a2461.id}"
+resource "aws_route" "web_route" {
+  route_table_id         = "${aws_route_table.web_route_table.id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.InternetGateway.id}"
+  network_interface_id = "${aws_network_interface.firewall_web_interface.id}"
 }
 
-resource "aws_network_interface" "FWManagementNetworkInterface" {
-  subnet_id         = "${aws_subnet.NewPublicSubnet.id}"
+resource "aws_route" "db_route" {
+  route_table_id         = "${aws_route_table.db_route_table.id}"
+  destination_cidr_block = "0.0.0.0/0"
+    network_interface_id = "${aws_network_interface.firewall_db_interface.id}"
+}
+
+resource "aws_network_interface" "firewall_management_interface" {
+  subnet_id         = "${aws_subnet.public_subnet.id}"
   security_groups   = ["${aws_security_group.sgWideOpen.id}"]
   source_dest_check = false
   private_ips_count = 1
   private_ips       = ["10.0.0.99"]
 }
 
-resource "aws_network_interface" "FWPublicNetworkInterface" {
-  subnet_id         = "${aws_subnet.NewPublicSubnet.id}"
+resource "aws_network_interface" "firewall_public_interface" {
+  subnet_id         = "${aws_subnet.public_subnet.id}"
   security_groups   = ["${aws_security_group.sgWideOpen.id}"]
   source_dest_check = false
   private_ips_count = 1
   private_ips       = ["10.0.0.100"]
 }
 
-resource "aws_network_interface" "FWPrivate12NetworkInterface" {
-  subnet_id         = "${aws_subnet.NewWebSubnet.id}"
+resource "aws_network_interface" "firewall_web_interface" {
+  subnet_id         = "${aws_subnet.web_subnet.id}"
   security_groups   = ["${aws_security_group.sgWideOpen.id}"]
   source_dest_check = false
   private_ips_count = 1
   private_ips       = ["10.0.1.11"]
 }
 
+resource "aws_network_interface" "firewall_db_interface" {
+  subnet_id         = "${aws_subnet.db_subnet.id}"
+  security_groups   = ["${aws_security_group.sgWideOpen.id}"]
+  source_dest_check = false
+  private_ips_count = 1
+  private_ips       = ["10.0.2.11"]
+}
+
 resource "aws_network_interface" "WPNetworkInterface" {
-  subnet_id         = "${aws_subnet.NewWebSubnet.id}"
+  subnet_id         = "${aws_subnet.web_subnet.id}"
   security_groups   = ["${aws_security_group.sgWideOpen.id}"]
   source_dest_check = false
   private_ips_count = 1
@@ -123,12 +172,12 @@ resource "aws_eip" "ManagementElasticIP" {
 }
 
 resource "aws_eip_association" "FWEIPManagementAssociation" {
-  network_interface_id = "${aws_network_interface.FWManagementNetworkInterface.id}"
+  network_interface_id = "${aws_network_interface.firewall_management_interface.id}"
   allocation_id        = "${aws_eip.ManagementElasticIP.id}"
 }
 
 resource "aws_eip_association" "FWEIPPublicAssociation" {
-  network_interface_id = "${aws_network_interface.FWPublicNetworkInterface.id}"
+  network_interface_id = "${aws_network_interface.firewall_public_interface.id}"
   allocation_id        = "${aws_eip.PublicElasticIP.id}"
 }
 
@@ -306,17 +355,22 @@ resource "aws_instance" "FWInstance" {
 
   network_interface {
     device_index         = 0
-    network_interface_id = "${aws_network_interface.FWManagementNetworkInterface.id}"
+    network_interface_id = "${aws_network_interface.firewall_management_interface.id}"
   }
 
   network_interface {
     device_index         = 1
-    network_interface_id = "${aws_network_interface.FWPublicNetworkInterface.id}"
+    network_interface_id = "${aws_network_interface.firewall_public_interface.id}"
   }
 
   network_interface {
     device_index         = 2
-    network_interface_id = "${aws_network_interface.FWPrivate12NetworkInterface.id}"
+    network_interface_id = "${aws_network_interface.firewall_web_interface.id}"
+  }
+
+  network_interface {
+    device_index         = 3
+    network_interface_id = "${aws_network_interface.firewall_db_interface.id}"
   }
 
   user_data = "${base64encode(join("", list("vmseries-bootstrap-aws-s3bucket=", var.MasterS3Bucket)))}"
@@ -342,7 +396,7 @@ resource "aws_instance" "WPWebInstance" {
   "#! /bin/bash\n",
 
           "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
-          "echo \"export new_routers='${aws_network_interface.FWPrivate12NetworkInterface.private_ips[0]}'\" >> /etc/dhcp/dhclient-enter-hooks.d/aws-default-route\n",
+          "echo \"export new_routers='${aws_network_interface.firewall_web_interface.private_ips[0]}'\" >> /etc/dhcp/dhclient-enter-hooks.d/aws-default-route\n",
           "ifdown eth0\n",
           "ifup eth0\n",
 

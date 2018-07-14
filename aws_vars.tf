@@ -2,6 +2,7 @@ data "aws_availability_zones" "available" {}
 variable "aws_region" {}
 variable "WebCIDR_Block" {}
 variable "PublicCIDR_Block" {}
+variable "DbCIDR_Block" {}
 variable "MasterS3Bucket" {}
 variable "VPCName" {}
 variable "VPCCIDR" {}

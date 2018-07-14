@@ -1,9 +1,10 @@
+VPCCIDR = "10.0.0.0/16"
 WebCIDR_Block = "10.0.1.0/24"
 PublicCIDR_Block = "10.0.0.0/24"
+DbCIDR_Block = "10.0.2.0/24"
 aws_region = "us-west-2"
-VPCName = "vv-2t-vpc"
-StackName = "vv-2t"
-VPCCIDR = "10.0.0.0/16"
+VPCName = "pan-2t-vpc"
+StackName = "pan-2t"
 ServerKeyName = "two_tier_vpc_key"
 ServerKeyNamePub = "keys/two_tier_vpc_key.pub"
 /* The S3 Bucket name MUST be globally unique. */
