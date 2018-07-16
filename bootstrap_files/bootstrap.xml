@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<config version="7.1.0" urldb="paloaltonetworks">
+<config urldb="paloaltonetworks" version="8.1.0">
   <mgt-config>
     <users>
       <entry name="admin">
@@ -9,7 +9,7 @@
             <superuser>yes</superuser>
           </role-based>
         </permissions>
-        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDVXVUUXBIZUpTajBQVFVIZ00wSndhcTh4d1NDY0JBM2pYMmxlZVBidCtvM045Um8yU0JFOW1FYUV2TkdDa0k0L0RFN1dXb2VBd1B5bkh3M25YUm0rN1hqWUdFVFBwR28wVXJkNjhIdmQyTW1QY0UrK1NTUEU0Y21oUnU3ckRQeUxKaVNaUVcwTTgwMlJldm1WQUs3SGE2MTRaYkhCSFR0V21UaWQyc2Qvd0xObFA2aGl2VzdKZ1dVUGN5MWNEK2E5YTJJcm9odDdkSDJQLzRnZnpzZnBVVzM0UGlHNVN3UnAwZVdFTTVaeFJ1RkhXb0RwZFdJdHZqNFlLRjBYUGFGc2ZqZzBwUzRqYzNoWVNuVi9VRWVqQWFmQmQwL3ZSQkFLeWt5OXJoVFFYNlFYTFlVNFJXNDg3dVhqU0RPdkZCWHpSRmlZL3lPamg0citUVklxc0MreUggYXdzLWtleXBhaXItdmlyZ2luaWEK</public-key>
+        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDMEdjWDZlVnFRdmNhbUQ5UGg1ZE5kOGQxUmFSTUxnRi9rREQ4RXRMRXlMQ2ZEK2REUUd4OHg1MHRwaTNILzhlREJGdXlCSGU5UmExQndNemlqREJtOTFQb2Y0RktHdnAzWDR3Zy9SQitBMDg1aG5HeWljOFRFTUp2cXZGblVPaEkrVkRzTGJFQ0taSk4xUHBraTRVczY4bjNnd2ZtcnlhbmtzSW5EUm14cVIrV0ZUMUJHd0xFaUI4SFp4VDc5R0d4djV2WjhkZnJtNE9mcGRFdXRIWUV6VkllNi9TWkJsUEZBZkI2WlFKRkMvM01pa0tlY0FXWmYvV2FWN0ljWi9RekdkM240NlVLcXRDbzE5QXJlczU1dWZ0VDBnRnk2d09USlBNZ3BOYVhpaGpDUFNFdjZmanJKSEpERjdDcVFRUjVjcnc3QURkTVNqejZTVEVTdXY1MHQgdHdvX3RpZXJfdnBjX2tleQ==</public-key>
       </entry>
     </users>
   </mgt-config>
@@ -94,6 +94,20 @@
                 <dhcp-client>
                   <create-default-route>no</create-default-route>
                 </dhcp-client>
+                <ipv6>
+                  <neighbor-discovery>
+                    <router-advertisement>
+                      <enable>no</enable>
+                    </router-advertisement>
+                  </neighbor-discovery>
+                </ipv6>
+                <ndp-proxy>
+                  <enabled>no</enabled>
+                </ndp-proxy>
+                <interface-management-profile>Ping Only</interface-management-profile>
+                <lldp>
+                  <enable>no</enable>
+                </lldp>
               </layer3>
             </entry>
             <entry name="ethernet1/3">
@@ -101,6 +115,20 @@
                 <dhcp-client>
                   <create-default-route>no</create-default-route>
                 </dhcp-client>
+                <ipv6>
+                  <neighbor-discovery>
+                    <router-advertisement>
+                      <enable>no</enable>
+                    </router-advertisement>
+                  </neighbor-discovery>
+                </ipv6>
+                <ndp-proxy>
+                  <enabled>no</enabled>
+                </ndp-proxy>
+                <interface-management-profile>Ping Only</interface-management-profile>
+                <lldp>
+                  <enable>no</enable>
+                </lldp>
               </layer3>
             </entry>
           </ethernet>
@@ -113,6 +141,11 @@
               <action>wait-recover</action>
             </entry>
           </monitor-profile>
+          <interface-management-profile>
+            <entry name="Ping Only">
+              <ping>yes</ping>
+            </entry>
+          </interface-management-profile>
         </profiles>
         <ike>
           <crypto-profiles>
@@ -297,7 +330,7 @@
             <disable-http>yes</disable-http>
           </service>
           <default-gateway>10.0.0.1</default-gateway>
-          <hostname>PA-VM</hostname>
+          <hostname>PAN-FW-01</hostname>
           <dns-setting>
             <servers>
               <primary>8.8.8.8</primary>
@@ -312,6 +345,7 @@
               <accept-dhcp-domain>no</accept-dhcp-domain>
             </dhcp-client>
           </type>
+          <server-verification>yes</server-verification>
         </system>
         <setting>
           <config>
@@ -320,6 +354,7 @@
           <management>
             <hostname-type-in-syslog>FQDN</hostname-type-in-syslog>
             <initcfg>
+              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDMEdjWDZlVnFRdmNhbUQ5UGg1ZE5kOGQxUmFSTUxnRi9rREQ4RXRMRXlMQ2ZEK2REUUd4OHg1MHRwaTNILzhlREJGdXlCSGU5UmExQndNemlqREJtOTFQb2Y0RktHdnAzWDR3Zy9SQitBMDg1aG5HeWljOFRFTUp2cXZGblVPaEkrVkRzTGJFQ0taSk4xUHBraTRVczY4bjNnd2ZtcnlhbmtzSW5EUm14cVIrV0ZUMUJHd0xFaUI4SFp4VDc5R0d4djV2WjhkZnJtNE9mcGRFdXRIWUV6VkllNi9TWkJsUEZBZkI2WlFKRkMvM01pa0tlY0FXWmYvV2FWN0ljWi9RekdkM240NlVLcXRDbzE5QXJlczU1dWZ0VDBnRnk2d09USlBNZ3BOYVhpaGpDUFNFdjZmanJKSEpERjdDcVFRUjVjcnc3QURkTVNqejZTVEVTdXY1MHQgdHdvX3RpZXJfdnBjX2tleQ==</public-key>
               <type>
                 <dhcp-client>
                   <send-hostname>yes</send-hostname>
@@ -328,10 +363,9 @@
                   <accept-dhcp-domain>no</accept-dhcp-domain>
                 </dhcp-client>
               </type>
-              <ip-address>10.0.0.99</ip-address>
-              <netmask>255.255.255.0</netmask>
-              <default-gateway>10.0.0.1</default-gateway>
-              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDVXVUUXBIZUpTajBQVFVIZ00wSndhcTh4d1NDY0JBM2pYMmxlZVBidCtvM045Um8yU0JFOW1FYUV2TkdDa0k0L0RFN1dXb2VBd1B5bkh3M25YUm0rN1hqWUdFVFBwR28wVXJkNjhIdmQyTW1QY0UrK1NTUEU0Y21oUnU3ckRQeUxKaVNaUVcwTTgwMlJldm1WQUs3SGE2MTRaYkhCSFR0V21UaWQyc2Qvd0xObFA2aGl2VzdKZ1dVUGN5MWNEK2E5YTJJcm9odDdkSDJQLzRnZnpzZnBVVzM0UGlHNVN3UnAwZVdFTTVaeFJ1RkhXb0RwZFdJdHZqNFlLRjBYUGFGc2ZqZzBwUzRqYzNoWVNuVi9VRWVqQWFmQmQwL3ZSQkFLeWt5OXJoVFFYNlFYTFlVNFJXNDg3dVhqU0RPdkZCWHpSRmlZL3lPamg0citUVklxc0MreUggYXdzLWtleXBhaXItdmlyZ2luaWEK</public-key>
+              <hostname>sample-cft-fw</hostname>
+              <dns-primary>8.8.8.8</dns-primary>
+              <dns-secondary>8.8.4.4</dns-secondary>
             </initcfg>
           </management>
         </setting>
@@ -595,6 +629,47 @@
                       </vulnerability>
                     </profiles>
                   </profile-setting>
+                </entry>
+                <entry name="Bastion Host Web to DB">
+                  <to>
+                    <member>db</member>
+                  </to>
+                  <from>
+                    <member>web</member>
+                  </from>
+                  <source>
+                    <member>Web Bastion Host</member>
+                  </source>
+                  <destination>
+                    <member>any</member>
+                  </destination>
+                  <source-user>
+                    <member>any</member>
+                  </source-user>
+                  <category>
+                    <member>any</member>
+                  </category>
+                  <application>
+                    <member>ssh</member>
+                  </application>
+                  <service>
+                    <member>application-default</member>
+                  </service>
+                  <hip-profiles>
+                    <member>any</member>
+                  </hip-profiles>
+                  <log-start>yes</log-start>
+                  <log-end>yes</log-end>
+                  <action>allow</action>
+                  <profile-setting>
+                    <profiles>
+                      <vulnerability>
+                        <member>Test Drive</member>
+                      </vulnerability>
+                    </profiles>
+                  </profile-setting>
+                  <description>Enable this policy to permit a bastion Web host to reach the DB network instances</description>
+                  <disabled>yes</disabled>
                 </entry>
                 <entry name="Log default deny">
                   <to>
@@ -875,6 +950,19 @@
               </entry>
             </vulnerability>
           </profiles>
+          <import>
+            <network>
+              <interface>
+                <member>ethernet1/2</member>
+                <member>ethernet1/3</member>
+              </interface>
+            </network>
+          </import>
+          <address>
+            <entry name="Web Bastion Host">
+              <ip-netmask>10.0.1.101/32</ip-netmask>
+            </entry>
+          </address>
         </entry>
       </vsys>
     </entry>

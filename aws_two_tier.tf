@@ -51,11 +51,6 @@ resource "aws_subnet" "db_subnet" {
   }
 }
 
-resource "aws_vpc_dhcp_options" "dopt21c7d043" {
-  domain_name         = "us-west-2.compute.internal"
-  domain_name_servers = ["AmazonProvidedDNS"]
-}
-
 resource "aws_network_acl" "aclb765d6d2" {
   vpc_id = "${aws_vpc.main.id}"
 
@@ -188,11 +183,6 @@ resource "aws_eip_association" "FWEIPManagementAssociation" {
 resource "aws_eip_association" "FWEIPPublicAssociation" {
   network_interface_id = "${aws_network_interface.firewall_public_interface.id}"
   allocation_id        = "${aws_eip.PublicElasticIP.id}"
-}
-
-resource "aws_vpc_dhcp_options_association" "dchpassoc1" {
-  vpc_id          = "${aws_vpc.main.id}"
-  dhcp_options_id = "${aws_vpc_dhcp_options.dopt21c7d043.id}"
 }
 
 resource "aws_internet_gateway" "InternetGateway" {
@@ -403,6 +393,10 @@ resource "aws_instance" "FWInstance" {
   }
 
   user_data = "${base64encode(join("", list("vmseries-bootstrap-aws-s3bucket=", var.MasterS3Bucket)))}"
+
+  tags {
+    "Name" = "${join("", list(var.StackName, "_PAN_Firewall"))}"
+  }
 }
 
 /* Create the Ubuntu web server instance */
@@ -425,9 +419,6 @@ resource "aws_instance" "WPWebInstance" {
   "#! /bin/bash\n",
 
           "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
-          "echo \"export new_routers='${aws_network_interface.firewall_web_interface.private_ips[0]}'\" >> /etc/dhcp/dhclient-enter-hooks.d/aws-default-route\n",
-          "ifdown eth0\n",
-          "ifup eth0\n",
 
           "while true\n",
           "  do\n",
@@ -442,6 +433,10 @@ resource "aws_instance" "WPWebInstance" {
           "apt-get install -y apache2 wordpress\n"
   )))
   }"
+
+  tags {
+    "Name" = "${join("", list(var.StackName, "_Web_Server"))}"
+  }
 }
 
 /* Create the Ubuntu DB server instance */
@@ -464,9 +459,6 @@ resource "aws_instance" "DBInstance" {
   "#! /bin/bash\n",
 
           "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
-          "echo \"export new_routers='${aws_network_interface.firewall_web_interface.private_ips[0]}'\" >> /etc/dhcp/dhclient-enter-hooks.d/aws-default-route\n",
-          "ifdown eth0\n",
-          "ifup eth0\n",
 
           "while true\n",
           "  do\n",
@@ -481,6 +473,10 @@ resource "aws_instance" "DBInstance" {
           "apt-get install -y mysql-common mysql-server\n"
   )))
   }"
+
+  tags {
+    "Name" = "${join("", list(var.StackName, "_DB_Server"))}"
+  }
 }
 
 resource "null_resource" "check_fw_ready" {
