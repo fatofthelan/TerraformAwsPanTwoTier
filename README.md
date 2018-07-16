@@ -47,6 +47,9 @@ Usage:
  Notes:
  ------
  - The web and db subnets have their default routes point the firewall's web and db interface. No need to change the instances from x.x.x.1.
+ - To allow a bastion host in the web subnet to access the db network, enable the disabled policy in the firewall's security section.
+ - Once the template has run, you can ssh to the web server on port 221 and the db server on port 222. For example ```ssh -i keys/two_tier_vpc_key ubuntu@<public ip>```
+ - Again, change the default password (admin/paloalto) of the firewall!
 
 
 Support:
