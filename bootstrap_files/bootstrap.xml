@@ -363,7 +363,7 @@
                   <accept-dhcp-domain>no</accept-dhcp-domain>
                 </dhcp-client>
               </type>
-              <hostname>sample-cft-fw</hostname>
+              <hostname>PAN-VM-01</hostname>
               <dns-primary>8.8.8.8</dns-primary>
               <dns-secondary>8.8.4.4</dns-secondary>
             </initcfg>
