@@ -816,15 +816,6 @@
             </nat>
           </rulebase>
           <vm-info-source>
-            <entry name="aws-monitor">
-              <AWS-VPC>
-                <vpc-id>vpc-40210b25</vpc-id>
-                <source>***REMOVED***</source>
-                <access-key-id>***REMOVED***</access-key-id>
-                <secret-access-key>***REMOVED***</secret-access-key>
-                <disabled>no</disabled>
-              </AWS-VPC>
-            </entry>
           </vm-info-source>
           <profiles>
             <vulnerability>
