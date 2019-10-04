@@ -1,17 +1,46 @@
-data "aws_availability_zones" "available" {}
-variable "aws_region" {}
-variable "WebCIDR_Block" {}
-variable "PublicCIDR_Block" {}
-variable "DbCIDR_Block" {}
-variable "MasterS3Bucket" {}
-variable "VPCName" {}
-variable "VPCCIDR" {}
-variable "ServerKeyName" {}
-variable "ServerKeyNamePub" {}
-variable "StackName" {}
+data "aws_availability_zones" "available" {
+}
 
+variable "aws_region" {
+}
+
+variable "WebCIDR_Block" {
+}
+
+variable "PublicCIDR_Block" {
+}
+
+variable "DbCIDR_Block" {
+}
+
+variable "MasterS3Bucket" {
+}
+
+variable "VPCName" {
+}
+
+variable "VPCCIDR" {
+}
+
+variable "ServerKeyName" {
+}
+
+variable "ServerKeyNamePub" {
+}
+
+variable "StackName" {
+}
+
+/* This AMI map is for the PAN-OS 8.1 Bundle 2 PAYG VM-Series firewall. If you would like
+   to use the Bundle 1 PAYG or the BYOL VM-Series, see this link for the destired AMIs:
+https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list/images-for-pan-os-8-1#id1849DL00W6W
+*/
+
+/* If you'd like to specify ami ids for your firewalls, uncomment the var below
+and change your FW's AMI to use it instead of the data source below. For example,
+you'd use "ami = var.PANFWRegionMap[var.aws_region]"
 variable "PANFWRegionMap" {
-  type = "map"
+  type = map(string)
 
   default = {
     "us-east-1"      = "ami-bffd3cc2"
@@ -30,42 +59,72 @@ variable "PANFWRegionMap" {
     "ap-south-1"     = "ami-ee80d981"
   }
 }
+*/
 
-variable "WebServerRegionMap" {
+
+/* This section specifies what license type and version of the Palo Alto Networks Firewall to use. */
+
+/* Change the default value below to change what version of PANOS to use. */
+variable "panos_version" {
+  description = "Firewall version to deploy."
+  default     = "9.0"
+}
+
+/* Change the default value below to change what license type to use. */
+variable "license_type" {
+  description = "Type of VM-Series to deploy.  Can be one of 'byol', 'bundle-1', 'bundle-2'."
+  default     = "bundle-2"
+}
+
+variable "license_type_map" {
   type = "map"
 
   default = {
-    "us-east-1"      = "ami-1ecae776"
-    "us-east-2"      = "ami-c55673a0"
-    "us-west-2"      = "ami-e7527ed7"
-    "us-west-1"      = "ami-d114f295"
-    "eu-west-1"      = "ami-a10897d6"
-    "eu-central-1"   = "ami-a8221fb5"
-    "ap-northeast-1" = "ami-cbf90ecb"
-    "ap-southeast-1" = "ami-68d8e93a"
-    "ap-southeast-2" = "ami-fd9cecc7"
-    "sa-east-1"      = "ami-b52890a8"
-    "cn-north-1"     = "ami-f239abcb"
+    byol     = "6njl1pau431dv1qxipg63mvah"
+    bundle-1 = "6kxdw3bbmdeda3o6i1ggqt4km"
+    bundle-2 = "806j2of0qy5osgjjixq9gqc6g"
   }
 }
 
-variable "UbuntuRegionMap" {
-  type = "map"
+/* Create a list of Palo Alto Networks firewall AMI's available for installation */
+data "aws_ami" "PANFWRegionMap" {
+  most_recent = true
+  owners      = ["aws-marketplace"]
 
-  default = {
-    "us-west-2"      = "ami-efd0428f"
-    "ap-northeast-1" = "ami-afb09dc8"
-    "us-west-1"      = "ami-2afbde4a"
-    "ap-northeast-2" = "ami-66e33108"
-    "ap-southeast-1" = "ami-8fcc75ec"
-    "ap-southeast-2" = "ami-96666ff5"
-    "eu-central-1"   = "ami-060cde69"
-    "eu-west-1"      = "ami-a8d2d7ce"
-    "eu-west-2"      = "ami-f1d7c395"
-    "sa-east-1"      = "ami-4090f22c"
-    "us-east-1"      = "ami-80861296"
-    "us-east-2"      = "ami-618fab04"
-    "ca-central-1"   = "ami-b3d965d7"
-    "ap-south-1"     = "ami-c2ee9dad"
+  filter {
+    name   = "name"
+    values = ["PA-VM-AWS-${var.panos_version}*"]
+  }
+
+  filter {
+    name   = "product-code"
+    values = ["${var.license_type_map[var.license_type]}"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+
+}
+
+data "aws_ami" "ubuntu-linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-xenial-16.04-amd64-server*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
 }
