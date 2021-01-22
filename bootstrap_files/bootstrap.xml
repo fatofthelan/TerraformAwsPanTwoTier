@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<config urldb="paloaltonetworks" version="8.1.0">
+<config urldb="paloaltonetworks" version="9.1.0">
   <mgt-config>
     <users>
       <entry name="admin">
-        <phash>$1$nkrsverl$Y0yn/ioks5l/LILDbGxx5.</phash>
+        <phash>$1$lksnfpet$2.DpaocuAAF7S7weGpS.m/</phash>
         <permissions>
           <role-based>
             <superuser>yes</superuser>
           </role-based>
         </permissions>
-        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDMEdjWDZlVnFRdmNhbUQ5UGg1ZE5kOGQxUmFSTUxnRi9rREQ4RXRMRXlMQ2ZEK2REUUd4OHg1MHRwaTNILzhlREJGdXlCSGU5UmExQndNemlqREJtOTFQb2Y0RktHdnAzWDR3Zy9SQitBMDg1aG5HeWljOFRFTUp2cXZGblVPaEkrVkRzTGJFQ0taSk4xUHBraTRVczY4bjNnd2ZtcnlhbmtzSW5EUm14cVIrV0ZUMUJHd0xFaUI4SFp4VDc5R0d4djV2WjhkZnJtNE9mcGRFdXRIWUV6VkllNi9TWkJsUEZBZkI2WlFKRkMvM01pa0tlY0FXWmYvV2FWN0ljWi9RekdkM240NlVLcXRDbzE5QXJlczU1dWZ0VDBnRnk2d09USlBNZ3BOYVhpaGpDUFNFdjZmanJKSEpERjdDcVFRUjVjcnc3QURkTVNqejZTVEVTdXY1MHQgdHdvX3RpZXJfdnBjX2tleQ==</public-key>
+        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FESzJDZ2pNcXBRNmpZMS9PRE1Za05wcThLU1p1TkZITy9lYzhGYk81MXZRT2poM29Ed3RNbEgrQTRjYWttdkRoTVZjMUN3TVdyNjhpMUg3enorZzA0RGhVVkZxUWN5ay9UeEtDN1N5VUNzeWpsZXpHMFhudVFTWUwvVUUyTmdmZDlObVVBRzlGUzhESGFiVS90MHRTV3FvbHR0NTVwMW9INW1aVTlhUFRWaE1uQ3d3YS8yRHhUN1R6VURlcWNSYWN1MDFYd1g0LytJSGZZdEJ1bnR2dXJRQzlpZTFGN3VDNU10bWVwakgwdzgvZlcyRlFCalJZRWVXZGtYdFlkMkUrMjlaa0JSWHFlbmp4MER6dEdTOWhHNytDRjBVOENHbzdtNUhzcUtLYTY0bENKZHBrQW9EdEt3UUVSWjVMam42SFY3VW93dGc1TFdiTjFBZ1RQK1VaUCs4SkVVdTBZZExQbWQzT3ZNKzBuZVhsZUU5NEhKMmN5S042L1pjL0lmQ0FzWS84ek91Z2RWMDFyRWM1QktRbFAwVzZJTjMzUFF2SmlmeGtKVUtUcEZJV3Q4UHF4RHNhZTNXRTF4c0dBMkh2Rm5iZmhIa2RmQ2xKUC8vUHZzVUhEZnFZR3JrL1E0WjNVWEh2RC9YWjRNRDRlNXRZcVVlQ1lBdnlNaHZKbjVWSE09IHR3b190aWVyX3ZwY19rZXk=</public-key>
       </entry>
     </users>
   </mgt-config>
@@ -69,13 +69,6 @@
         <scheduled>yes</scheduled>
       </report>
     </botnet>
-    <content-preview>
-      <application/>
-      <application-type>
-        <category/>
-        <technology/>
-      </application-type>
-    </content-preview>
   </shared>
   <devices>
     <entry name="localhost.localdomain">
@@ -254,32 +247,36 @@
         <qos>
           <profile>
             <entry name="default">
-              <class>
-                <entry name="class1">
-                  <priority>real-time</priority>
-                </entry>
-                <entry name="class2">
-                  <priority>high</priority>
-                </entry>
-                <entry name="class3">
-                  <priority>high</priority>
-                </entry>
-                <entry name="class4">
-                  <priority>medium</priority>
-                </entry>
-                <entry name="class5">
-                  <priority>medium</priority>
-                </entry>
-                <entry name="class6">
-                  <priority>low</priority>
-                </entry>
-                <entry name="class7">
-                  <priority>low</priority>
-                </entry>
-                <entry name="class8">
-                  <priority>low</priority>
-                </entry>
-              </class>
+              <class-bandwidth-type>
+                <mbps>
+                  <class>
+                    <entry name="class1">
+                      <priority>real-time</priority>
+                    </entry>
+                    <entry name="class2">
+                      <priority>high</priority>
+                    </entry>
+                    <entry name="class3">
+                      <priority>high</priority>
+                    </entry>
+                    <entry name="class4">
+                      <priority>medium</priority>
+                    </entry>
+                    <entry name="class5">
+                      <priority>medium</priority>
+                    </entry>
+                    <entry name="class6">
+                      <priority>low</priority>
+                    </entry>
+                    <entry name="class7">
+                      <priority>low</priority>
+                    </entry>
+                    <entry name="class8">
+                      <priority>low</priority>
+                    </entry>
+                  </class>
+                </mbps>
+              </class-bandwidth-type>
             </entry>
           </profile>
         </qos>
@@ -354,7 +351,7 @@
           <management>
             <hostname-type-in-syslog>FQDN</hostname-type-in-syslog>
             <initcfg>
-              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDMEdjWDZlVnFRdmNhbUQ5UGg1ZE5kOGQxUmFSTUxnRi9rREQ4RXRMRXlMQ2ZEK2REUUd4OHg1MHRwaTNILzhlREJGdXlCSGU5UmExQndNemlqREJtOTFQb2Y0RktHdnAzWDR3Zy9SQitBMDg1aG5HeWljOFRFTUp2cXZGblVPaEkrVkRzTGJFQ0taSk4xUHBraTRVczY4bjNnd2ZtcnlhbmtzSW5EUm14cVIrV0ZUMUJHd0xFaUI4SFp4VDc5R0d4djV2WjhkZnJtNE9mcGRFdXRIWUV6VkllNi9TWkJsUEZBZkI2WlFKRkMvM01pa0tlY0FXWmYvV2FWN0ljWi9RekdkM240NlVLcXRDbzE5QXJlczU1dWZ0VDBnRnk2d09USlBNZ3BOYVhpaGpDUFNFdjZmanJKSEpERjdDcVFRUjVjcnc3QURkTVNqejZTVEVTdXY1MHQgdHdvX3RpZXJfdnBjX2tleQ==</public-key>
+              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FESzJDZ2pNcXBRNmpZMS9PRE1Za05wcThLU1p1TkZITy9lYzhGYk81MXZRT2poM29Ed3RNbEgrQTRjYWttdkRoTVZjMUN3TVdyNjhpMUg3enorZzA0RGhVVkZxUWN5ay9UeEtDN1N5VUNzeWpsZXpHMFhudVFTWUwvVUUyTmdmZDlObVVBRzlGUzhESGFiVS90MHRTV3FvbHR0NTVwMW9INW1aVTlhUFRWaE1uQ3d3YS8yRHhUN1R6VURlcWNSYWN1MDFYd1g0LytJSGZZdEJ1bnR2dXJRQzlpZTFGN3VDNU10bWVwakgwdzgvZlcyRlFCalJZRWVXZGtYdFlkMkUrMjlaa0JSWHFlbmp4MER6dEdTOWhHNytDRjBVOENHbzdtNUhzcUtLYTY0bENKZHBrQW9EdEt3UUVSWjVMam42SFY3VW93dGc1TFdiTjFBZ1RQK1VaUCs4SkVVdTBZZExQbWQzT3ZNKzBuZVhsZUU5NEhKMmN5S042L1pjL0lmQ0FzWS84ek91Z2RWMDFyRWM1QktRbFAwVzZJTjMzUFF2SmlmeGtKVUtUcEZJV3Q4UHF4RHNhZTNXRTF4c0dBMkh2Rm5iZmhIa2RmQ2xKUC8vUHZzVUhEZnFZR3JrL1E0WjNVWEh2RC9YWjRNRDRlNXRZcVVlQ1lBdnlNaHZKbjVWSE09IHR3b190aWVyX3ZwY19rZXk=</public-key>
               <type>
                 <dhcp-client>
                   <send-hostname>yes</send-hostname>
@@ -363,7 +360,7 @@
                   <accept-dhcp-domain>no</accept-dhcp-domain>
                 </dhcp-client>
               </type>
-              <hostname>PAN-VM-01</hostname>
+              <hostname>PAN-FW-01</hostname>
               <dns-primary>8.8.8.8</dns-primary>
               <dns-secondary>8.8.4.4</dns-secondary>
             </initcfg>
@@ -425,7 +422,7 @@
           <rulebase>
             <security>
               <rules>
-                <entry name="SSH inbound">
+                <entry name="SSH inbound" uuid="6a333353-f039-4a0d-9e5d-77db0f2eb88a">
                   <to>
                     <member>db</member>
                     <member>web</member>
@@ -446,8 +443,8 @@
                     <member>any</member>
                   </category>
                   <application>
-                    <member>ssh</member>
                     <member>ping</member>
+                    <member>ssh</member>
                   </application>
                   <service>
                     <member>application-default</member>
@@ -459,7 +456,7 @@
                   <log-end>yes</log-end>
                   <action>allow</action>
                 </entry>
-                <entry name="SSH 221-222 inbound">
+                <entry name="SSH 221-222 inbound" uuid="28d72973-5554-4d66-af96-1e062bb4d3d2">
                   <to>
                     <member>db</member>
                     <member>web</member>
@@ -480,8 +477,8 @@
                     <member>any</member>
                   </category>
                   <application>
-                    <member>ssh</member>
                     <member>ping</member>
+                    <member>ssh</member>
                   </application>
                   <service>
                     <member>service-tcp-221</member>
@@ -494,7 +491,7 @@
                   <log-end>yes</log-end>
                   <action>allow</action>
                 </entry>
-                <entry name="Allow all ping">
+                <entry name="Allow all ping" uuid="e0880a66-3b06-4691-9dfd-fc21d1cee23d">
                   <to>
                     <member>any</member>
                   </to>
@@ -526,7 +523,7 @@
                   <log-end>yes</log-end>
                   <action>allow</action>
                 </entry>
-                <entry name="Web browsing">
+                <entry name="Web browsing" uuid="f3b41668-b28e-40bd-bcde-9856c94e35b5">
                   <to>
                     <member>web</member>
                   </to>
@@ -558,7 +555,7 @@
                   <log-end>yes</log-end>
                   <action>allow</action>
                 </entry>
-                <entry name="Allow all outbound">
+                <entry name="Allow all outbound" uuid="3ca93a42-8a2b-486e-85c1-55fed4d107b6">
                   <to>
                     <member>external</member>
                   </to>
@@ -591,7 +588,7 @@
                   <log-end>yes</log-end>
                   <action>allow</action>
                 </entry>
-                <entry name="Web to DB">
+                <entry name="Web to DB" uuid="b35123c6-0dd8-41eb-bfda-f41e34fb74f8">
                   <to>
                     <member>db</member>
                   </to>
@@ -630,7 +627,7 @@
                     </profiles>
                   </profile-setting>
                 </entry>
-                <entry name="Bastion Host Web to DB">
+                <entry name="Bastion Host Web to DB" uuid="1ccf6d79-ece3-4dcd-aa6c-7f7245da53f2">
                   <to>
                     <member>db</member>
                   </to>
@@ -671,7 +668,7 @@
                   <description>Enable this policy to permit a bastion Web host to reach the DB network instances</description>
                   <disabled>yes</disabled>
                 </entry>
-                <entry name="Log default deny">
+                <entry name="Log default deny" uuid="0d1d7055-a30c-4e9f-a31d-6c9ca28aeb0b">
                   <to>
                     <member>any</member>
                   </to>
@@ -707,7 +704,7 @@
             </security>
             <nat>
               <rules>
-                <entry name="Web SSH">
+                <entry name="Web SSH" uuid="2ca0adca-d4a1-415d-8da8-31a793660cf8">
                   <destination-translation>
                     <translated-address>10.0.1.101</translated-address>
                     <translated-port>22</translated-port>
@@ -734,7 +731,7 @@
                   <service>service-tcp-221</service>
                   <nat-type>ipv4</nat-type>
                 </entry>
-                <entry name="DB SSH">
+                <entry name="DB SSH" uuid="12683ee8-44fa-4baf-acdd-a25cf4a2f2d2">
                   <destination-translation>
                     <translated-address>10.0.2.101</translated-address>
                     <translated-port>22</translated-port>
@@ -761,7 +758,7 @@
                   <service>service-tcp-222</service>
                   <nat-type>ipv4</nat-type>
                 </entry>
-                <entry name="WordPress NAT">
+                <entry name="WordPress NAT" uuid="cb68352d-8da7-4af3-9734-d0922b0c8644">
                   <destination-translation>
                     <translated-address>10.0.1.101</translated-address>
                     <translated-port>80</translated-port>
@@ -788,7 +785,7 @@
                   <service>service-http</service>
                   <nat-type>ipv4</nat-type>
                 </entry>
-                <entry name="Outbound nat">
+                <entry name="Outbound nat" uuid="e7576b72-14af-4816-b301-70b5ac08b5a6">
                   <source-translation>
                     <dynamic-ip-and-port>
                       <interface-address>
@@ -815,8 +812,7 @@
               </rules>
             </nat>
           </rulebase>
-          <vm-info-source>
-          </vm-info-source>
+          <vm-info-source/>
           <profiles>
             <vulnerability>
               <entry name="Test Drive">
@@ -940,6 +936,7 @@
                 <description>WW's profile</description>
               </entry>
             </vulnerability>
+            <custom-url-category/>
           </profiles>
           <import>
             <network>

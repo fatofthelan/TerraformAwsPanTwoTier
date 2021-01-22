@@ -67,7 +67,7 @@ variable "PANFWRegionMap" {
 /* Change the default value below to change what version of PANOS to use. */
 variable "panos_version" {
   description = "Firewall version to deploy."
-  default     = "9.0"
+  default     = "9.1"
 }
 
 /* Change the default value below to change what license type to use. */
@@ -81,8 +81,8 @@ variable "license_type_map" {
 
   default = {
     byol     = "6njl1pau431dv1qxipg63mvah"
-    bundle-1 = "6kxdw3bbmdeda3o6i1ggqt4km"
-    bundle-2 = "806j2of0qy5osgjjixq9gqc6g"
+    bundle-1 = "e9yfvyj3uag5uo5j2hjikv74n"
+    bundle-2 = "hd44w1chf26uv4p52cdynb2o"
   }
 }
 

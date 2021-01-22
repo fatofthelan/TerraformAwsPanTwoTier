@@ -6,7 +6,7 @@ Terraform Templates to Deploy Infrastructure onto AWS
  - Please see section 2 below pertaining to Credentials and Authentication.
  - Run the command ```ssh-keygen -f two_tier_vpc_key -t rsa -N ''``` in the keys/ directory.
  - Please change the S3 bucket name to a globally unique name.
- - Please change the default username/password of admin/paloalto immediately!
+ - Please change the default username/password of admin/in*4ksh8JN2kdh immediately!
 
 1. Code Organization:
 -----------------
@@ -48,7 +48,7 @@ Usage:
  - The web and db subnets have their default routes point the firewall's web and db interface. No need to change the instances from x.x.x.1.
  - To allow a bastion host in the web subnet to access the db network, enable the disabled policy in the firewall's security section.
  - Once the template has run, you can ssh to the web server on port 221 and the db server on port 222. For example ```ssh -i keys/two_tier_vpc_key ubuntu@<public ip>```
- - Again, change the default password (admin/paloalto) of the firewall!
+ - Again, change the default password (admin/in*4ksh8JN2kdh) of the firewall!
 
 
 Support:

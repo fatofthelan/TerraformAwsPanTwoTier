@@ -4,7 +4,7 @@ output "Firewall_Management_URL" {
 }
 
 output "Firewall_Credentials" {
-  value       = "Username/Password: admin/paloalto"
+  value       = "Username/Password: admin/in*4ksh8JN2kdh"
   description = "Firewall Credentials"
 }
 

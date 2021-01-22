@@ -1,7 +1,7 @@
 while true
 do
   echo "$1" >> /tmp/pan.log
-  resp=$(curl -vvv -s -S -g --insecure "https://$1/api/?type=op&cmd=<show><chassis-ready></chassis-ready></show>&key=LUFRPT10VGJKTEV6a0R4L1JXd0ZmbmNvdUEwa25wMlU9d0N5d292d2FXNXBBeEFBUW5pV2xoZz09")
+  resp=$(curl -vvv -s -S -g --insecure "https://$1/api/?type=op&cmd=<show><chassis-ready></chassis-ready></show>&key=LUFRPT1TaUl2RHZHaTdNc290UEw3NStTSll2MlUrZ1k9MTRRc0FrbHYwUDVDd01lWXE4SGg5ODNtRTVIUGxEaktqVUR1QTFWaG00NVhXL2NoaXpwSXo5R25acTBLbzNjSA==")
   if [ $? -ne 0 ] ; then
     echo "Continuing.." >> pan.log
   fi
